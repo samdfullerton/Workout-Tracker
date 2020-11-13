@@ -10,6 +10,17 @@ router.get("/api/workouts", (req, res) => {
       }
     })
     
-})
+});
 
+router.post("/api/workouts", (req, res) => {
+    db.Workout.find({}, (err, data) => {
+        if (err) {
+            res.status(404).send("not working")
+        }else {
+            res.json(data)
+        }
+    })
+})  
+
+router.post("")
 module.exports = router;
