@@ -1,7 +1,7 @@
 let mongoose = require("mongoose");
 let db = require("../models");
 
-mongoose.connect("mongodb://localhost/workout", {
+mongoose.connect("mongodb+srv://samfu:rootroot@cluster0.jmavo.mongodb.net/workouts?retryWrites=true&w=majority", {
   useNewUrlParser: true,
   useFindAndModify: false
 });
@@ -123,14 +123,23 @@ let workoutSeed = [
     ]
   }
 ];
-
-db.Workout.deleteMany({})
-  .then(() => db.Workout.collection.insertMany(workoutSeed))
-  .then(data => {
-    console.log(data.result.n + " records inserted!");
-    process.exit(0);
+workoutSeed.forEach(workout => {
+  const newWorkOut = new db.Workout(workout);
+  newWorkOut.save((err, data) => {
+    if (err) {
+      console.error(err)
+    } else {
+      console.log("workout added")
+    }
   })
-  .catch(err => {
-    console.error(err);
-    process.exit(1);
-  });
+});
+// db.Workout.deleteMany({})
+//   .then(() => db.Workout.collection.insertMany(workoutSeed))
+//   .then(data => {
+//     console.log(data.result.n + " records inserted!");
+//     process.exit(0);
+//   })
+//   .catch(err => {
+//     console.error(err);
+//     process.exit(1);
+//   });
