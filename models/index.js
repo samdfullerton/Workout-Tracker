@@ -1,27 +1,46 @@
-const { MongoClient } = require("mongodb");
-const mongoose = require("mongoose");
-// Replace the following with your Atlas connection string                                                                                                                                        
+const mongoose = require("mongoose")
 
-const url = "mongodb+srv://samfu:rootroot@cluster0.jmavo.mongodb.net/workouts?retryWrites=true&w=majority";
+const Schema = mongoose.Schema
 
-const client = new MongoClient(url);
+const workoutSchema = new Schema({
+    day: {
+        type: Date,
+        default: () => new Date()
+        }, 
+    exercises: [
+        {
+            type: {
+                type: String,
+                trim: true,
+                required: true
+            },
+            name:  {
+                type: String,
+                trim: true,
+                required: true
+            },
+            duration:  {
+                type: Number,
+                trim: true,
+                required: true
+            },
+            weight: {
+                type: Number
+            },
+            reps: {
+                type: Number
+            },
+            sets: {
+                type: Number    
+            },
+            distance: {
+                type: Number
+            }
 
-async function run() {
-    try {
-        await client.connect();
-        console.log("Connected correctly to server");
+        }
+    ]
 
-    } catch (err) {
-        console.log(err.stack);
-    }
-    finally {
-        await client.close();
-    }
-}
-const workoutSchema = new mongoose.Schema({
-    day: Date,
-    exercises: Array
   });
 const Workout = mongoose.model('Workout', workoutSchema);
 
-module.exports = {client, Workout};
+module.exports = Workout;
