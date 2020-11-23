@@ -18,6 +18,7 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb+srv://samfu:rootroot@cluste
 
 // routes
 app.use(require("./routes/route-api.js"));
+app.use(require("./routes/route-html.js"));
 
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}!`);
